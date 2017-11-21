@@ -130,7 +130,6 @@ class Alte_Movie_Showtimes_Admin {
 		//TODO: there's got to be a better way to do this?
 		register_setting( 'alte-movie-showtimes-settings-group', 'movie_title_1' );
 		register_setting( 'alte-movie-showtimes-settings-group', 'imdb_code_1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_date_display' );
 
 		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_date_1' );
 		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_1-1' );
@@ -164,7 +163,6 @@ class Alte_Movie_Showtimes_Admin {
 		// Settings for movie 2
 		register_setting( 'alte-movie-showtimes-settings-group', 'movie_title_2' );
 		register_setting( 'alte-movie-showtimes-settings-group', 'imdb_code_2' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_date_display' );
 
 		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_date_1' );
 		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_1-1' );
@@ -194,4 +192,24 @@ class Alte_Movie_Showtimes_Admin {
 		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_7-1' );
 		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_7-2' );
 	}
+
+	public static function alte_movie_showtimes_shortcode( $atts, $content=null ) {
+		extract(shortcode_atts( array(
+			'which_movie' => '1',
+			'span_week' => "yes"
+		), $atts ));
+
+		if( $span_week == "yes" ) $span_week = 1;
+		if( $span_week == "no" ) $span_week = 0;
+
+		// get the data from the options table, this should be an array for each movie
+		// $options = get_option('');
+		// $movie1_options = $options
+
+		ob_start();
+		require('partials/alte-movie-showtimes-front-end-shortcode.php');
+		$content = ob_get_clean();
+		return $content;
+	}
+	add_shortcode( 'movie_showtimes', 'alte_movie_showtimes_shortcode' );
 }

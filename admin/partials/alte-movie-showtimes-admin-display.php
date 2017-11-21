@@ -37,25 +37,7 @@
             Date: <input type="text" name="movie1_date_6" value="<?php echo esc_attr( get_option('movie1_date_6') ); ?>" />(eg. Wednesday's date) | Times: <input type="text" name="movie1_time_6-1" value="<?php echo esc_attr( get_option('movie1_time_6-1') ); ?>" /> <input type="text" name="movie1_time_6-2" value="<?php echo esc_attr( get_option('movie1_time_6-2') ); ?>" /><br/>
             Date: <input type="text" name="movie1_date_7" value="<?php echo esc_attr( get_option('movie1_date_7') ); ?>" />(eg. Thursday's date) | Times: <input type="text" name="movie1_time_7-1" value="<?php echo esc_attr( get_option('movie1_time_7-1') ); ?>" /> <input type="text" name="movie1_time_7-2" value="<?php echo esc_attr( get_option('movie1_time_7-2') ); ?>" /><br/>
 
-            <h4>Options</h4>
-            <?php
-            $checked1 = ' ';
-            if (get_option('movie1_date_display') == 'single-date') {
-                $checked1 = ' checked="checked" ';
-            }
-            else {
-                $checked1 = ' ';
-            }
-            echo '<input type="radio" name="movie1_date_display" value="single-date" '.$checked1.'/>Display dates individually</br>';
-            $checked2 = ' ';
-            if (get_option('movie1_date_display') == 'date-span') {
-                $checked2 = ' checked="checked" ';
-            }
-            else {
-                $checked2 = ' ';
-            }
-            echo '<input type="radio" name="movie1_date_display" value="date-span" '.$checked2.'/>Display last dates as a span (eg. Monday - Thursday)</br>';
-            ?>
+            
 
         </div>
         <div class="set-movie-showtimes">
@@ -73,25 +55,7 @@
             Date: <input type="text" name="movie2_date_6" value="<?php echo esc_attr( get_option('movie2_date_6') ); ?>" />(eg. Wednesday's date) | Times: <input type="text" name="movie2_time_6-1" value="<?php echo esc_attr( get_option('movie2_time_6-1') ); ?>" /> <input type="text" name="movie2_time_6-2" value="<?php echo esc_attr( get_option('movie2_time_6-2') ); ?>" /><br/>
             Date: <input type="text" name="movie2_date_7" value="<?php echo esc_attr( get_option('movie2_date_7') ); ?>" />(eg. Thursday's date) | Times: <input type="text" name="movie2_time_7-1" value="<?php echo esc_attr( get_option('movie2_time_7-1') ); ?>" /> <input type="text" name="movie2_time_7-2" value="<?php echo esc_attr( get_option('movie2_time_7-2') ); ?>" /><br/>
 
-            <h4>Options</h4>
-            <?php
-            $checked1 = ' ';
-            if (get_option('movie2_date_display') == 'single-date') {
-                $checked1 = ' checked="checked" ';
-            }
-            else {
-                $checked1 = ' ';
-            }
-            echo '<input type="radio" name="movie2_date_display" value="single-date" '.$checked1.'/>Display dates individually</br>';
-            $checked2 = ' ';
-            if (get_option('movie2_date_display') == 'date-span') {
-                $checked2 = ' checked="checked" ';
-            }
-            else {
-                $checked2 = ' ';
-            }
-            echo '<input type="radio" name="movie2_date_display" value="date-span" '.$checked2.'/>Display last dates as a span (eg. Date 4 - Date 5)</br>';
-            ?>
+
 
         </div>
         <?php submit_button(); ?>
