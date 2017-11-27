@@ -102,114 +102,75 @@ class Alte_Movie_Showtimes_Admin {
 
 	}
 
-	public static function actions() {
-		add_action( 'admin_menu', array( 'Alte_Movie_Showtimes_Admin', 'showtimes_admin_menu' ) );
-		add_action( 'admin_init', array( 'Alte_Movie_Showtimes_Admin', 'register_settings' ) );
+	public function actions() {
+		add_action( 'admin_menu', array( $this, 'create_plugin_settings_page' ) );
+		add_action( 'admin_init', array( $this, 'setup_sections' ) );
+		add_action( 'admin_init', array( $this, 'setup_fields' ) );
+	}
+	public function create_plugin_settings_page() {
+	    // Add the menu item and page
+	    $page_title = 'Movie Showtimes Settings Page';
+	    $menu_title = 'Movie Showtimes';
+	    $capability = 'manage_options';
+	    $slug = 'alte_movie_showtimes_admin_page';
+	    $callback = array( 'Alte_Movie_Showtimes_Admin', 'plugin_settings_page_content' );
+	    $icon = 'dashicons-tickets';
+	    $position = 6;
+
+	    add_menu_page( $page_title, $menu_title, $capability, $slug, $callback, $icon, $position );
+	}
+	public static function plugin_settings_page_content() {
+		require('partials/alte-movie-showtimes-admin-display.php');
+	}
+	public static function setup_sections() {
+	    add_settings_section( 'movie_1_section', 'Movie 1 Showtimes', array( 'Alte_Movie_Showtimes_Admin', 'section_callback' ), 'alte_movie_showtimes_admin_page' );
+		add_settings_section( 'movie_2_section', 'Movie 2 Showtimes', array( 'Alte_Movie_Showtimes_Admin', 'section_callback' ), 'alte_movie_showtimes_admin_page' );
+
+	}
+	public static function section_callback( $arguments ) {
+		switch( $arguments['id'] ){
+	        case 'movie_1_section':
+	            echo 'This is the first description here!';
+	            break;
+	        case 'movie_2_section':
+	            echo 'This one is number two';
+	            break;
+	        case 'movie_3_section':
+	            echo 'Third time is the charm!';
+	            break;
+	    }
+	}
+	public static function setup_fields() {
+	    add_settings_field( 'imdb_code_1', 'Imdb Code', array( 'Alte_Movie_Showtimes_Admin', 'field_callback' ), 'alte_movie_showtimes_admin_page', 'movie_1_section' );
+		// add_settings_field( 'movie_title_1', 'Movie Title', array( 'Alte_Movie_Showtimes_Admin', 'field_callback' ), 'alte_movie_showtimes_admin_page', 'movie_1_section' );
+
+	}
+	public static function field_callback( $arguments ) {
+    	echo '<input name="imdb_code_1" id="imdb_code_1" type="text" value="' . get_option( 'imdb_code_1' ) . '" /><br/>';
+		register_setting( 'alte_movie_showtimes_admin_page', 'imdb_code_1' );
+    	// echo '<input name="movie_title_1" id="movie_title_1" type="text" value="' . get_option( 'movie_title_1' ) . '" /><br/>';
 	}
 
-	public static function showtimes_admin_menu() {
-		// create the admin page
-		add_menu_page(
-			__( 'Set Movie Showtimes', 'alte-movie-showtimes' ),
-			'Movie Showtimes',
-			'manage_options',
-			'custompage',
-			array( 'Alte_Movie_Showtimes_Admin', 'alte_movie_showtimes_admin_page' ),
-			'dashicons-tickets',
-			6
-		);
-	}
 
-	public static function alte_movie_showtimes_admin_page() {
-	    require('partials/alte-movie-showtimes-admin-display.php');
-	}
-
-
-	public static function register_settings() {
-		// Settings for movie 1
-		//TODO: there's got to be a better way to do this?
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie_title_1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'imdb_code_1' );
-
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_date_1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_1-1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_1-2' );
-
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_date_2' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_2-1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_2-2' );
-
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_date_3' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_3-1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_3-2' );
-
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_date_4' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_4-1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_4-2' );
-
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_date_5' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_5-1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_5-2' );
-
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_date_6' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_6-1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_6-2' );
-
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_date_7' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_7-1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie1_time_7-2' );
-
-
-		// Settings for movie 2
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie_title_2' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'imdb_code_2' );
-
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_date_1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_1-1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_1-2' );
-
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_date_2' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_2-1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_2-2' );
-
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_date_3' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_3-1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_3-2' );
-
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_date_4' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_4-1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_4-2' );
-
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_date_5' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_5-1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_5-2' );
-
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_date_6' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_6-1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_6-2' );
-
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_date_7' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_7-1' );
-		register_setting( 'alte-movie-showtimes-settings-group', 'movie2_time_7-2' );
-	}
-
-	public static function alte_movie_showtimes_shortcode( $atts, $content=null ) {
-		extract(shortcode_atts( array(
-			'which_movie' => '1',
-			'span_week' => "yes"
-		), $atts ));
-
-		if( $span_week == "yes" ) $span_week = 1;
-		if( $span_week == "no" ) $span_week = 0;
-
-		// get the data from the options table, this should be an array for each movie
-		// $options = get_option('');
-		// $movie1_options = $options
-
-		ob_start();
-		require('partials/alte-movie-showtimes-front-end-shortcode.php');
-		$content = ob_get_clean();
-		return $content;
-	}
-	add_shortcode( 'movie_showtimes', 'alte_movie_showtimes_shortcode' );
 }
+
+
+function alte_movie_showtimes_shortcode( $atts, $content=null ) {
+	extract(shortcode_atts( array(
+		'which_movie' => '1',
+		'span_week' => "yes"
+	), $atts ));
+
+	if( $span_week == "yes" ) $span_week = 1;
+	if( $span_week == "no" ) $span_week = 0;
+
+	// get the data from the options table, this should be an array for each movie
+	// $options = get_option('');
+	// $movie1_options = $options
+
+	ob_start();
+	require('partials/alte-movie-showtimes-front-end-shortcode.php');
+	$content = ob_get_clean();
+	return $content;
+}
+add_shortcode( 'movie_showtimes', 'alte_movie_showtimes_shortcode' );
