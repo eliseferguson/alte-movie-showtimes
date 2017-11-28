@@ -2,3 +2,34 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+.clearfix::after {
+    display:block;
+    content: "";
+    clear: both;
+}
+
+.row_1 { float: left; width: 33%; }
+.row_2 { float: left; width: 33%; }
+.row_3 { float: left; width: 33%; }
+.row_4 { float: left; width: 33%; }
+.row_5 { float: left; width: 33%; }
+.row_6 { float: left; width: 33%; }
+.row_7 { float: left; width: 33%; }
+
+.settings-form-wrapper hr { clear: both; }
+
+/* For the option page if it's displaying as a table */
+.toplevel_page_alte_movie_showtimes_admin_page .form-table tr {
+    float: left;
+    width: 33%;
+    display: block;
+}
+.movie_title {
+    float: none !important;
+    width: auto !important;
+}
+.movie_id {
+    float: none !important;
+    width: auto !important;
+}

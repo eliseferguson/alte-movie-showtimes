@@ -21,7 +21,9 @@
     <h1>Set movie showtimes</h1>
     <form method="post" action="options.php">
         <?php settings_fields( 'alte_movie_showtimes_admin_page' ); ?>
-        <?php do_settings_sections( 'alte_movie_showtimes_admin_page' ); ?>
+        <?php do_settings_sections( 'alte_movie_showtimes_admin_page'); ?>
+
+
         <?php submit_button(); ?>
     </form>
 </div>

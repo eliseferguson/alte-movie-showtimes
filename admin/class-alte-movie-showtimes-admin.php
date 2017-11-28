@@ -130,30 +130,275 @@ class Alte_Movie_Showtimes_Admin {
 	public static function section_callback( $arguments ) {
 		switch( $arguments['id'] ){
 	        case 'movie_1_section':
-	            echo 'This is the first description here!';
+	            echo 'Set times for movie #1 here';
 	            break;
 	        case 'movie_2_section':
-	            echo 'This one is number two';
+	            echo 'Set times for movie #2 here';
 	            break;
-	        case 'movie_3_section':
-	            echo 'Third time is the charm!';
-	            break;
+	        // case 'movie_3_section':
+	        //     echo 'Third time is the charm!';
+	        //     break;
 	    }
 	}
 	public static function setup_fields() {
-	    add_settings_field( 'imdb_code_1', 'Imdb Code', array( 'Alte_Movie_Showtimes_Admin', 'field_callback' ), 'alte_movie_showtimes_admin_page', 'movie_1_section' );
-		// add_settings_field( 'movie_title_1', 'Movie Title', array( 'Alte_Movie_Showtimes_Admin', 'field_callback' ), 'alte_movie_showtimes_admin_page', 'movie_1_section' );
+	    // add_settings_field( 'imdb_code_1', 'Imdb Code', array( 'Alte_Movie_Showtimes_Admin', 'field_callback' ), 'alte_movie_showtimes_admin_page', 'movie_1_section' );
 
+		// Add all fields we need to array
+		// TODO: this is annoyingly huge, isn't there a better way?
+
+		// TODO: add supplmental note about date format, and format how that displays in the admin page with CSS
+		$fields = array(
+				array(
+					'uid' => 'movie_title_1', 'class' => 'movie_title', 'row-id' => '', 'label' => 'Title', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Title', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+		        array(
+		            'uid' => 'imdb_code_1', 'class' => 'movie_id', 'row-id' => '', 'label' => 'Imdb Code', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Imdb Code', 'helper' => '', 'supplemental' => 'Use the code (like ttXXXXXXX) from the IMDB url - http://www.imdb.com/title/ttXXXXXXX/?ref_=nv_sr_1', 'default' => ''
+		        ),
+				//Movie date/time 1
+				array(
+					'uid' => 'movie1_date_1', 'class' => 'movie_date', 'row-id' => 'row_1', 'label' => 'Date', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Date', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie1_time_1-1', 'class' => 'movie_time_1', 'row-id' => 'row_1', 'label' => 'Time 1', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 1', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie1_time_1-2', 'class' => 'movie_time_2', 'row-id' => 'row_1', 'label' => 'Time 2', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 2', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				//Movie date/time 2
+				array(
+					'uid' => 'movie1_date_2', 'class' => 'movie_date', 'row-id' => 'row_2', 'label' => 'Date', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Date', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie1_time_2-1', 'class' => 'movie_time_1', 'row-id' => 'row_2', 'label' => 'Time 1', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 1', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie1_time_2-2', 'class' => 'movie_time_2', 'row-id' => 'row_2', 'label' => 'Time 2', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 2', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				//Movie date/time 3
+				array(
+					'uid' => 'movie1_date_3', 'class' => 'movie_date', 'row-id' => 'row_3', 'label' => 'Date', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Date', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie1_time_3-1', 'class' => 'movie_time_1', 'row-id' => 'row_3', 'label' => 'Time 1', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 1', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie1_time_3-2', 'class' => 'movie_time_2', 'row-id' => 'row_3', 'label' => 'Time 2', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 2', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				//Movie date/time 4
+				array(
+					'uid' => 'movie1_date_4', 'class' => 'movie_date', 'row-id' => 'row_4', 'label' => 'Date', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Date', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie1_time_4-1', 'class' => 'movie_time_1', 'row-id' => 'row_4', 'label' => 'Time 1', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 1', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie1_time_4-2', 'class' => 'movie_time_2', 'row-id' => 'row_4', 'label' => 'Time 2', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 2', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				//Movie date/time 5
+				array(
+					'uid' => 'movie1_date_5', 'class' => 'movie_date', 'row-id' => 'row_5', 'label' => 'Date', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Date', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie1_time_5-1', 'class' => 'alte_movie_showtimes_admin_pagemovie_time_1', 'row-id' => 'row_5', 'label' => 'Time 1', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 1', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie1_time_5-2', 'class' => 'movie_time_2', 'row-id' => 'row_5', 'label' => 'Time 2', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 2', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				//Movie date/time 6
+				array(
+					'uid' => 'movie1_date_6', 'class' => 'movie_date', 'row-id' => 'row_6', 'label' => 'Date', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Date', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie1_time_6-1', 'class' => 'movie_time_1', 'row-id' => 'row_6', 'label' => 'Time 1', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 1', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie1_time_6-2', 'class' => 'movie_time_2', 'row-id' => 'row_6', 'label' => 'Time 2', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 2', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				//Movie date/time 7
+				array(
+					'uid' => 'movie1_date_7', 'class' => 'movie_date', 'row-id' => 'row_7', 'label' => 'Date', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Date', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie1_time_7-1', 'class' => 'movie_time_1', 'row-id' => 'row_7', 'label' => 'Time 1', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 1', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie1_time_7-2', 'class' => 'movie_time_2', 'row-id' => 'row_7', 'label' => 'Time 2', 'section' => 'movie_1_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 2', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				// Movie 2
+				array(
+					'uid' => 'movie_title_2', 'class' => 'movie_title', 'row-id' => '', 'label' => 'Title', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Title', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+		        array(
+		            'uid' => 'imdb_code_2', 'class' => 'movie_id', 'row-id' => '', 'label' => 'Imdb Code', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Imdb Code', 'helper' => '', 'supplemental' => 'Use the code (like ttXXXXXXX) from the IMDB url - http://www.imdb.com/title/ttXXXXXXX/?ref_=nv_sr_1', 'default' => ''
+		        ),
+				//Movie date/time 1
+				array(
+					'uid' => 'movie2_date_1', 'class' => 'movie_date', 'row-id' => 'row_1', 'label' => 'Date', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Date', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie2_time_1-1', 'class' => 'movie_time_1', 'row-id' => 'row_1', 'label' => 'Time 1', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 1', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie2_time_1-2', 'class' => 'movie_time_2', 'row-id' => 'row_1', 'label' => 'Time 2', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 2', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				//Movie date/time 2
+				array(
+					'uid' => 'movie2_date_2', 'class' => 'movie_date', 'row-id' => 'row_2', 'label' => 'Date', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Date', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie2_time_2-1', 'class' => 'movie_time_1', 'row-id' => 'row_2', 'label' => 'Time 1', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 1', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie2_time_2-2', 'class' => 'movie_time_2', 'row-id' => 'row_2', 'label' => 'Time 2', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 2', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				//Movie date/time 3
+				array(
+					'uid' => 'movie2_date_3', 'class' => 'movie_date', 'row-id' => 'row_3', 'label' => 'Date', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Date', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie2_time_3-1', 'class' => 'movie_time_1', 'row-id' => 'row_3', 'label' => 'Time 1', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 1', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie2_time_3-2', 'class' => 'movie_time_2', 'row-id' => 'row_3', 'label' => 'Time 2', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 2', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				//Movie date/time 4
+				array(
+					'uid' => 'movie2_date_4', 'class' => 'movie_date', 'row-id' => 'row_4', 'label' => 'Date', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Date', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie2_time_4-1', 'class' => 'movie_time_1', 'row-id' => 'row_4', 'label' => 'Time 1', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 1', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie2_time_4-2', 'class' => 'movie_time_2', 'row-id' => 'row_4', 'label' => 'Time 2', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 2', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				//Movie date/time 5
+				array(
+					'uid' => 'movie2_date_5', 'class' => 'movie_date', 'row-id' => 'row_5', 'label' => 'Date', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Date', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie2_time_5-1', 'class' => 'alte_movie_showtimes_admin_pagemovie_time_1', 'row-id' => 'row_5', 'label' => 'Time 1', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 1', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie2_time_5-2', 'class' => 'movie_time_2', 'row-id' => 'row_5', 'label' => 'Time 2', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 2', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				//Movie date/time 6
+				array(
+					'uid' => 'movie2_date_6', 'class' => 'movie_date', 'row-id' => 'row_6', 'label' => 'Date', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Date', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie2_time_6-1', 'class' => 'movie_time_1', 'row-id' => 'row_6', 'label' => 'Time 1', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 1', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie2_time_6-2', 'class' => 'movie_time_2', 'row-id' => 'row_6', 'label' => 'Time 2', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 2', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				//Movie date/time 7
+				array(
+					'uid' => 'movie2_date_7', 'class' => 'movie_date', 'row-id' => 'row_7', 'label' => 'Date', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Date', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie2_time_7-1', 'class' => 'movie_time_1', 'row-id' => 'row_7', 'label' => 'Time 1', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 1', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+				array(
+					'uid' => 'movie2_time_7-2', 'class' => 'movie_time_2', 'row-id' => 'row_7', 'label' => 'Time 2', 'section' => 'movie_2_section', 'type' => 'text', 'options' => false, 'placeholder' => 'Time 2', 'helper' => '', 'supplemental' => '', 'default' => ''
+				),
+
+		);
+		foreach( $fields as $field ){
+	        add_settings_field( $field['uid'], $field['label'], array( $this, 'field_callback' ), 'alte_movie_showtimes_admin_page', $field['section'], $field );
+	        register_setting( 'alte_movie_showtimes_admin_page', $field['uid'] );
+	    }
+
+		// add_settings_field( 'movie_title_1', 'Movie Title', array( 'Alte_Movie_Showtimes_Admin', 'field_callback' ), 'alte_movie_showtimes_admin_page', 'movie_1_section' );
 	}
+
 	public static function field_callback( $arguments ) {
-    	echo '<input name="imdb_code_1" id="imdb_code_1" type="text" value="' . get_option( 'imdb_code_1' ) . '" /><br/>';
-		register_setting( 'alte_movie_showtimes_admin_page', 'imdb_code_1' );
+    	// echo '<input name="imdb_code_1" id="imdb_code_1" type="text" value="' . get_option( 'imdb_code_1' ) . '" /><br/>';
+		// register_setting( 'alte_movie_showtimes_admin_page', 'imdb_code_1' );
+
+		$value = get_option( $arguments['uid'] ); // Get the current value, if there is one
+	    if( ! $value ) { // If no value exists
+	        $value = $arguments['default']; // Set to our default
+	    }
+
+	    // Check which type of field we want
+	    switch( $arguments['type'] ){
+	        case 'text': // If it is a text field
+	            printf( '<input name="%1$s" id="%1$s" type="%2$s" placeholder="%3$s" class="%4$s" value="%5$s" />', $arguments['uid'], $arguments['type'], $arguments['placeholder'], $arguments['class'], $value );
+	            break;
+			case 'textarea': // If it is a textarea
+		        printf( '<textarea name="%1$s" id="%1$s" placeholder="%2$s" rows="5" cols="50">%3$s</textarea>', $arguments['uid'], $arguments['placeholder'], $value );
+		        break;
+		    case 'select': // If it is a select dropdown
+		        if( ! empty ( $arguments['options'] ) && is_array( $arguments['options'] ) ){
+		            $options_markup = '';
+		            foreach( $arguments['options'] as $key => $label ){
+		                $options_markup .= sprintf( '<option value="%s" %s>%s</option>', $key, selected( $value, $key, false ), $label );
+		            }
+		            printf( '<select name="%1$s" id="%1$s">%2$s</select>', $arguments['uid'], $options_markup );
+		        }
+	    }
+
+	    // If there is help text
+	    if( $helper = $arguments['helper'] ){
+	        printf( '<span class="helper"> %s</span>', $helper ); // Show it
+	    }
+
+	    // If there is supplemental text
+	    if( $supplimental = $arguments['supplemental'] ){
+	        printf( '<p class="description">%s</p>', $supplimental ); // Show it
+	    }
+
     	// echo '<input name="movie_title_1" id="movie_title_1" type="text" value="' . get_option( 'movie_title_1' ) . '" /><br/>';
 	}
 
 
 }
-
+// TODO: not using this right now as it wasn't saving
+// function custom_do_settings_sections($page) {
+// 	global $wp_settings_sections, $wp_settings_fields;
+//
+// 	if ( !isset($wp_settings_sections) || !isset($wp_settings_sections[$page]) )
+// 		return;
+//
+// 	foreach( (array) $wp_settings_sections[$page] as $section ) {
+// 		echo "<h3>{$section['title']}</h3>\n";
+// 		call_user_func($section['callback'], $section);
+// 		if ( !isset($wp_settings_fields) ||
+// 			 !isset($wp_settings_fields[$page]) ||
+// 			 !isset($wp_settings_fields[$page][$section['id']]) )
+// 				continue;
+// 		echo '<div class="settings-form-wrapper">';
+// 		custom_do_settings_fields($page, $section['id']);
+// 		echo '<hr/></div>';
+// 	}
+// }
+//
+// function custom_do_settings_fields($page, $section) {
+// 	global $wp_settings_fields;
+//
+// 	if ( !isset($wp_settings_fields) ||
+// 		 !isset($wp_settings_fields[$page]) ||
+// 		 !isset($wp_settings_fields[$page][$section]) )
+// 		return;
+//
+// 	foreach ( (array) $wp_settings_fields[$page][$section] as $field ) {
+//
+// 		echo '<div class="settings-form-row '. $field['args']['row-id'] .'">';
+// 		if ( !empty($field['args']['label_for']) )
+// 			echo '<p><label for="' . $field['args']['label_for'] . '">' .
+// 				$field['title'] . '</label><br />';
+// 		else
+// 			echo '<p><span class="field_title">' . $field['title'] . ': </span>';
+//
+// 		call_user_func($field['callback'], $field['args']);
+// 		if ( $field['args']['class'] == 'movie_time_2' ) {
+// 			echo '</p></div><br class="clearfix"/>';
+// 		} else {
+// 			echo '</p></div>';
+// 		}
+//
+// 	}
+// }
 
 function alte_movie_showtimes_shortcode( $atts, $content=null ) {
 	extract(shortcode_atts( array(
