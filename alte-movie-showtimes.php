@@ -12,7 +12,7 @@
  * Plugin Name:       ALTE Movie Showtimes
  * Plugin URI:        https://github.com/eliseferguson/alte-movie-showtimes
  * Description:       Enter and display movie showtimes without having to style or create schema by hand.  Connects with ALTE Movie Info plugin (alte-movie-info).
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Elise Ferguson
  * Author URI:        http://www.saturdaynightbattleship.com
  * License:           GPL-2.0+
