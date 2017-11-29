@@ -49,7 +49,7 @@ class Alte_Movie_Showtimes_Admin {
 	 */
 	public function __construct( $plugin_name, $version ) {
 
-		$this->plugin_name = $plugin_name;
+		->plugin_name = $plugin_name;
 		$this->version = $version;
 
 		$this::actions();
@@ -302,7 +302,7 @@ class Alte_Movie_Showtimes_Admin {
 
 		);
 		foreach( $fields as $field ){
-	        add_settings_field( $field['uid'], $field['label'], array( $this, 'field_callback' ), 'alte_movie_showtimes_admin_page', $field['section'], $field );
+	        add_settings_field( $field['uid'], $field['label'], array( 'Alte_Movie_Showtimes', 'field_callback' ), 'alte_movie_showtimes_admin_page', $field['section'], $field );
 	        register_setting( 'alte_movie_showtimes_admin_page', $field['uid'] );
 	    }
 
