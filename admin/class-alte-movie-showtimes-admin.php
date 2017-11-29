@@ -49,7 +49,7 @@ class Alte_Movie_Showtimes_Admin {
 	 */
 	public function __construct( $plugin_name, $version ) {
 
-		->plugin_name = $plugin_name;
+		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
 		$this::actions();
@@ -141,7 +141,7 @@ class Alte_Movie_Showtimes_Admin {
 	    }
 	}
 	public static function setup_fields() {
-		// Add all fields we need to array
+	 	// Add all fields we need to array
 		// TODO: this is annoyingly huge, isn't there a better way?
 
 		// TODO: add supplmental note about date format, and format how that displays in the admin page with CSS
@@ -302,14 +302,13 @@ class Alte_Movie_Showtimes_Admin {
 
 		);
 		foreach( $fields as $field ){
-	        add_settings_field( $field['uid'], $field['label'], array( 'Alte_Movie_Showtimes', 'field_callback' ), 'alte_movie_showtimes_admin_page', $field['section'], $field );
+	        add_settings_field( $field['uid'], $field['label'], array( 'Alte_Movie_Showtimes_Admin', 'field_callback' ), 'alte_movie_showtimes_admin_page', $field['section'], $field );
 	        register_setting( 'alte_movie_showtimes_admin_page', $field['uid'] );
 	    }
 
 	}
 
 	public static function field_callback( $arguments ) {
-
 
 		$value = get_option( $arguments['uid'] ); // Get the current value, if there is one
 	    if( ! $value ) { // If no value exists
@@ -348,6 +347,7 @@ class Alte_Movie_Showtimes_Admin {
 
 
 }
+
 
 function alte_movie_showtimes_shortcode( $atts, $content=null ) {
 	extract(shortcode_atts( array(
