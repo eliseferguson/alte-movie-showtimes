@@ -7,29 +7,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 $movieIDVar = 'imdb_code_' . $which_movie;
 $movieTitleVar = 'movie_title_' . $which_movie;
 
-
-//TODO: showtimes, check if week span
-//TODO: Hey look, some pseudocode
-// if ($span_week = 1) {
-//  show the mon - thu option rather than each day
-//      if ( two times listed ) then
-//          show the "and" additional times
-//      else
-//          only show one time
-// } else { }
-//  display each date on it's own line
-//      if ( two times listed ) then
-//          show the "and" additional times
-//      else
-//          only show one time
-//          echo '<time itemprop="startDate" datetime="';
-//          echo esc_attr( get_option('movie1_date_1') );
-//          echo 'T' . $twentyFourHourTime . '">';
-//          echo $longFormDate . ' - <span>';
-//          echo esc_attr( get_option('movie1_time_1-1') );
-//          echo '</span> p.m.</time><br/>';
-
-
 ?>
 
 <div itemscope itemtype="http://schema.org/ScreeningEvent">
@@ -52,45 +29,61 @@ $movieTitleVar = 'movie_title_' . $which_movie;
             $enteredDate = get_option($movieVarDate);
             $convertedDate = strtotime($enteredDate);
 
-            $longFormDate = date('l, M. jS, Y',$convertedDate);
+            $longFormDate = date( 'l, M. jS, Y', $convertedDate);
             $twentyFourHourDate = date('Y-m-d', $convertedDate);
 
-            // TODO: convert the entered time to 24 hour time
+            //convert the entered time to 24 hour time
             $enteredTime1 = get_option( $movieVarTime1 );
-            // TODO: check if this exists
             $enteredTime2 = get_option( $movieVarTime2 );
 
-            //TODO: add an option in the admin to select AM or PM and use that here
+            //TODO: add an option in the admin to select AM or PM and use that here instead of assuming
             $convertedTime1 = strtotime($enteredTime1 . ' PM');
-            $convertedTime2 = strtotime($enteredTime2 . ' PM');
-
             $twentyFourHourTime1 = date( "G:i", $convertedTime1 );
-            $twentyFourHourTime2 = date( "G:i", $convertedTime2 );
 
-
-             echo '<time itemprop="startDate" datetime="';
-             echo esc_attr( $enteredDate );
-             echo 'T' . $twentyFourHourTime1 . '">';
-             echo $longFormDate . ' - <span>';
-             echo esc_attr( $enteredTime1 );
-             echo '</span>';
-             if ( $enteredTime2 != null ) {
-                 echo '</time> and <time itemprop="startDate" datetime="';
-                 echo esc_attr( $enteredDate );
-                 echo 'T' . $twentyFourHourTime2 . '"><span>';
-                 echo esc_attr( $enteredTime2 );
+            if ( $enteredTime2 != null ) {
+                $convertedTime2 = strtotime($enteredTime2 . ' PM');
+                $twentyFourHourTime2 = date( "G:i", $convertedTime2 );
             }
-             echo '</span> p.m.</time><br/>';
+
+            if ( $span_week == 1 && $i == 4 ) {
+
+                $longFormMonth = date( 'M.', $convertedDate );
+                $longFormYear = date( 'Y', $convertedDate );
+                $longFormDayFirst = date( 'jS', $convertedDate );
+                $enteredDateLast = get_option('movie' . $which_movie . '_date_7');
+                $convertedLastDate = strtotime( $enteredDateLast );
+                $longFormDayLast = date( 'jS', $convertedLastDate );
+
+                // Display the dates as a span instead
+                echo '<time itemprop="startDate" datetime="';
+                echo esc_attr( $enteredDate );
+                echo 'T' . $twentyFourHourTime1 . '">Monday - Thursday, ';
+                echo $longFormMonth;
+                echo $longFormDayFirst . '-' . $longFormDayLast . ', ' . $longFormYear;
+                echo ' - <span>';
+                echo esc_attr( $enteredTime1 );
+                echo '</span> p.m.</time>';
+                break;
+            } else {
+                // Display the dates one at a time
+                 echo '<time itemprop="startDate" datetime="';
+                 echo esc_attr( $enteredDate );
+                 echo 'T' . $twentyFourHourTime1 . '">';
+                 echo $longFormDate . ' - <span>';
+                 echo esc_attr( $enteredTime1 );
+                 echo '</span>';
+                 if ( $enteredTime2 != null ) {
+                     echo '</time> and <time itemprop="startDate" datetime="';
+                     echo esc_attr( $enteredDate );
+                     echo 'T' . $twentyFourHourTime2 . '"><span>';
+                     echo esc_attr( $enteredTime2 );
+                }
+                 echo '</span> p.m.</time><br/>';
+             }
         }
-
-
 
         ?>
 
-        <!-- <time itemprop="startDate" datetime="<?php echo esc_attr( get_option('movie1_date_1') ); ?>T19:00">Friday, Nov. 17th, 2017 - <span><?php echo esc_attr( get_option('movie1_time_1-1') ); ?></span> p.m.</time><br/>
-        <time itemprop="startDate" datetime="<?php echo esc_attr( get_option('movie1_date_2') ); ?>T16:30">Saturday, Nov. 18th, 2017 - <span><?php echo esc_attr( get_option('movie1_time_2-1') ); ?></span></time> and <time itemprop="startDate" datetime="<?php echo get_option('movie1_date_2'); ?>T19:00"><span><?php echo esc_attr( get_option('movie1_time_2-2') ); ?></span> p.m.</time><br/>
-        <time itemprop="startDate" datetime="<?php echo esc_attr( get_option('movie1_date_3') ); ?>T16:30">Sunday, Nov. 19th, 2017 - <span><?php echo esc_attr( get_option('movie1_time_3-1') ); ?></span></time> and <time itemprop="startDate" datetime="<?php echo get_option('movie1_date_3'); ?>T19:00"><span><?php echo esc_attr( get_option('movie1_time_3-2') ); ?></span> p.m.</time><br/>
-        <time itemprop="startDate" datetime="<?php echo esc_attr( get_option('movie1_date_4') ); ?>T19:00">Monday-Thursday, Nov. 20th-23rd, 2017 - <span><?php echo esc_attr( get_option('movie1_time_4-1') ); ?></span> p.m.</time> -->
 
         <link itemprop="sameAs" href="www.imdb.com/title/<?php echo get_option($movieIDVar); ?>/"/>
     </div>
