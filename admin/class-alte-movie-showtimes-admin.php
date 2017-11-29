@@ -141,8 +141,6 @@ class Alte_Movie_Showtimes_Admin {
 	    }
 	}
 	public static function setup_fields() {
-	    // add_settings_field( 'imdb_code_1', 'Imdb Code', array( 'Alte_Movie_Showtimes_Admin', 'field_callback' ), 'alte_movie_showtimes_admin_page', 'movie_1_section' );
-
 		// Add all fields we need to array
 		// TODO: this is annoyingly huge, isn't there a better way?
 
@@ -308,12 +306,10 @@ class Alte_Movie_Showtimes_Admin {
 	        register_setting( 'alte_movie_showtimes_admin_page', $field['uid'] );
 	    }
 
-		// add_settings_field( 'movie_title_1', 'Movie Title', array( 'Alte_Movie_Showtimes_Admin', 'field_callback' ), 'alte_movie_showtimes_admin_page', 'movie_1_section' );
 	}
 
 	public static function field_callback( $arguments ) {
-    	// echo '<input name="imdb_code_1" id="imdb_code_1" type="text" value="' . get_option( 'imdb_code_1' ) . '" /><br/>';
-		// register_setting( 'alte_movie_showtimes_admin_page', 'imdb_code_1' );
+
 
 		$value = get_option( $arguments['uid'] ); // Get the current value, if there is one
 	    if( ! $value ) { // If no value exists
@@ -348,57 +344,10 @@ class Alte_Movie_Showtimes_Admin {
 	        printf( '<p class="description">%s</p>', $supplimental ); // Show it
 	    }
 
-    	// echo '<input name="movie_title_1" id="movie_title_1" type="text" value="' . get_option( 'movie_title_1' ) . '" /><br/>';
 	}
 
 
 }
-// TODO: not using this right now as it wasn't saving
-// function custom_do_settings_sections($page) {
-// 	global $wp_settings_sections, $wp_settings_fields;
-//
-// 	if ( !isset($wp_settings_sections) || !isset($wp_settings_sections[$page]) )
-// 		return;
-//
-// 	foreach( (array) $wp_settings_sections[$page] as $section ) {
-// 		echo "<h3>{$section['title']}</h3>\n";
-// 		call_user_func($section['callback'], $section);
-// 		if ( !isset($wp_settings_fields) ||
-// 			 !isset($wp_settings_fields[$page]) ||
-// 			 !isset($wp_settings_fields[$page][$section['id']]) )
-// 				continue;
-// 		echo '<div class="settings-form-wrapper">';
-// 		custom_do_settings_fields($page, $section['id']);
-// 		echo '<hr/></div>';
-// 	}
-// }
-//
-// function custom_do_settings_fields($page, $section) {
-// 	global $wp_settings_fields;
-//
-// 	if ( !isset($wp_settings_fields) ||
-// 		 !isset($wp_settings_fields[$page]) ||
-// 		 !isset($wp_settings_fields[$page][$section]) )
-// 		return;
-//
-// 	foreach ( (array) $wp_settings_fields[$page][$section] as $field ) {
-//
-// 		echo '<div class="settings-form-row '. $field['args']['row-id'] .'">';
-// 		if ( !empty($field['args']['label_for']) )
-// 			echo '<p><label for="' . $field['args']['label_for'] . '">' .
-// 				$field['title'] . '</label><br />';
-// 		else
-// 			echo '<p><span class="field_title">' . $field['title'] . ': </span>';
-//
-// 		call_user_func($field['callback'], $field['args']);
-// 		if ( $field['args']['class'] == 'movie_time_2' ) {
-// 			echo '</p></div><br class="clearfix"/>';
-// 		} else {
-// 			echo '</p></div>';
-// 		}
-//
-// 	}
-// }
 
 function alte_movie_showtimes_shortcode( $atts, $content=null ) {
 	extract(shortcode_atts( array(
