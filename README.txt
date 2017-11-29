@@ -38,7 +38,13 @@ Enter and display movie showtimes without having to style or create schema by ha
 3. Enter movie times as 7:00 (right now this is only accounting for PM movies)
 4. Enter movie dates as YYYY-MM-DD
 
+= To Use the Shortcode =
 
+1. Use the shortcode "movie_showtimes"
+2. Attributes are -
+* which_movie="1" (or 2) This will determine which movie times to show
+* span_week="no" (or yes) This will determine if the full week will display as indiviual days or if Monday-Thursday will display as a span of time
+3. Example: [movie_showtimes which_movie="1" span_week="no"]
 
 == Changelog ==
 
