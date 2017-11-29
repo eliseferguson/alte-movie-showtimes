@@ -4,7 +4,7 @@ Donate link: http://www.saturdaynightbattleship.com
 Tags: movie, imdb, films, showtimes, cinema
 Requires at least: 3.0.1
 Tested up to: 4.9
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,26 +22,29 @@ Enter and display movie showtimes without having to style or create schema by ha
 2. Upload the 'alte-movie-info' folder into the '/wp-content/plugins/' directory
 3. Go to the Plugins admin page and activate the plugin
 
+= Use GitHub Updater =
+
+1. Install github updater: https://github.com/afragen/github-updater
+2. In Settings > Github Updater, click the Install Plugin tab
+3. Use plugin URI: https://github.com/eliseferguson/alte-movie-showtimes
+4. Click Install Plugin button
+5. Github updater will notify you of future plugin updates
+6. Activate ALTE Movie Showtimes plugin from the plugin page
+
 = To Setup The Plugin =
 
-= How to Use the Widget =
-
-
-== Frequently Asked Questions ==
-
-= A question that someone might have =
-
-An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
-
-== Screenshots ==
+1. Navigate to the Movie Showtimes menu item in the main dashboard menu
+2. Enter the movie title, imdb code, dates and movie times
+3. Enter movie times as 7:00 (right now this is only accounting for PM movies)
+4. Enter movie dates as YYYY-MM-DD
 
 
 
 == Changelog ==
 
+= 1.0.1 =
+* Update readme
+* Fix bug - undefined call to this
+
 = 1.0.0 =
-* Initial commit
+* Basic functionality
