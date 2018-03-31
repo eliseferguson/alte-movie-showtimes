@@ -4,7 +4,7 @@ Donate link: http://www.saturdaynightbattleship.com
 Tags: movie, imdb, films, showtimes, cinema
 Requires at least: 3.0.1
 Tested up to: 4.9
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,6 +47,8 @@ Enter and display movie showtimes without having to style or create schema by ha
 3. Example: [movie_showtimes which_movie="1" span_week="no"]
 
 == Changelog ==
+= 1.0.2 =
+* Check for empty date
 
 = 1.0.1 =
 * Update readme
