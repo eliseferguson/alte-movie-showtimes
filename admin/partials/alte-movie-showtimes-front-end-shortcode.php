@@ -7,6 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 $movieIDVar = 'imdb_code_' . $which_movie;
 $movieTitleVar = 'movie_title_' . $which_movie;
 
+// TODO: if ALTE_Movie_Info plugin is installed get the imdb and title from there
+
 ?>
 
 <div itemscope itemtype="http://schema.org/ScreeningEvent">
@@ -66,19 +68,21 @@ $movieTitleVar = 'movie_title_' . $which_movie;
                 break;
             } else {
                 // Display the dates one at a time
-                 echo '<time itemprop="startDate" datetime="';
-                 echo esc_attr( $enteredDate );
-                 echo 'T' . $twentyFourHourTime1 . '">';
-                 echo $longFormDate . ' - <span>';
-                 echo esc_attr( $enteredTime1 );
-                 echo '</span>';
-                 if ( $enteredTime2 != null ) {
-                     echo '</time> and <time itemprop="startDate" datetime="';
-                     echo esc_attr( $enteredDate );
-                     echo 'T' . $twentyFourHourTime2 . '"><span>';
-                     echo esc_attr( $enteredTime2 );
+                if ($enteredDate != "") {
+                    echo '<time itemprop="startDate" datetime="';
+                    echo esc_attr( $enteredDate );
+                    echo 'T' . $twentyFourHourTime1 . '">';
+                    echo $longFormDate . ' - <span>';
+                    echo esc_attr( $enteredTime1 );
+                    echo '</span>';
+                    if ( $enteredTime2 != null ) {
+                        echo '</time> and <time itemprop="startDate" datetime="';
+                        echo esc_attr( $enteredDate );
+                        echo 'T' . $twentyFourHourTime2 . '"><span>';
+                        echo esc_attr( $enteredTime2 );
+                    }
+                    echo '</span> p.m.</time><br/>';
                 }
-                 echo '</span> p.m.</time><br/>';
              }
         }
 
